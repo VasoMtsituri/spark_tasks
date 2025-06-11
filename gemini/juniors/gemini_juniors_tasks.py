@@ -39,3 +39,9 @@ intersection = spark_array.intersection(second_rdd)
 # create a new RDD containing only the unique elements.
 new_rdd_numbers = spark.sparkContext.parallelize([5, 5, 8, 9, 9, 11, 12, 13, 1, 1, 2, 3, 8, 114])
 unique_numbers = new_rdd_numbers.distinct().collect()
+
+# 11. Grouping by Key: Given an RDD of key-value pairs (e.g., (word, count)),
+# group the values by key.
+pairs_rdd = spark.sparkContext.parallelize([(1, 2), (1, 3), (2, 2), (3, 4), (4, 5), (4, 10)])
+grouped_pairs = pairs_rdd.groupByKey().collect()
+grouped_pairs_as_list = pairs_rdd.groupByKey().map(lambda x: (x[0], list(x[1]))).collect()
