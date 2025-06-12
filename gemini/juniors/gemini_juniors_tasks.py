@@ -45,3 +45,16 @@ unique_numbers = new_rdd_numbers.distinct().collect()
 pairs_rdd = spark.sparkContext.parallelize([(1, 2), (1, 3), (2, 2), (3, 4), (4, 5), (4, 10)])
 grouped_pairs = pairs_rdd.groupByKey().collect()
 grouped_pairs_as_list = pairs_rdd.groupByKey().map(lambda x: (x[0], list(x[1]))).collect()
+
+# 12. Reducing by Key: Given an RDD of key-value pairs where the values are numbers,
+# sum the values for each key.
+sum_of_numbers = pairs_rdd.reduceByKey(lambda x, y: x + y)
+
+# 13.Word Count (RDD): Implement a classic word count program using
+# RDD transformations and actions.
+# 13.1 - Split lines into words (flatMap)
+words_rdd = readme_file.flatMap(lambda x: x.split())
+# 13.2 - Assign count of 1 to each word (map)
+word_pairs_rdd = words_rdd.map(lambda x: (x, 1))
+# 13.3 - Aggregate counts by word (reduceByKey)
+word_counts_rdd = word_pairs_rdd.reduceByKey(lambda x, y: x + y).collect()
