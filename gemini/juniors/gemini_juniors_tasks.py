@@ -1,3 +1,4 @@
+# ############### Core Concepts & RDDs ###############
 # 1.SparkSession Initialization: Write a script that initializes a SparkSession
 from pyspark.sql import SparkSession
 
@@ -65,4 +66,35 @@ first_5_words = word_counts_rdd.take(5)
 print(first_5_words)
 
 # 15. Saving RDD to Text File: Save an RDD of strings to a text file.
-word_counts_rdd.saveAsTextFile('word_counts.txt')
+# word_counts_rdd.saveAsTextFile('word_counts.txt')
+
+# ############### DataFrames & Spark SQL ###############
+# 16. Creating DataFrame from List: Create a Spark DataFrame
+# from a Python list of dictionaries, inferring the schema.
+data = [
+    {"name": "Alice", "age": 30, "city": "New York", "is_student": False, "score": 85.5},
+    {"name": "Bob", "age": 24, "city": "London", "is_student": True, "score": 92.1},
+    {"name": "Charlie", "age": 35, "city": "Paris", "is_student": False, "score": 78.9},
+    {"name": "Diana", "age": 28, "city": "Tokyo", "is_student": True, "score": 88.0},
+    {"name": "Eve", "age": None, "city": "Berlin", "is_student": False, "score": 70.0}
+]
+# 16.1 Create a Spark DataFrame from the list of dictionaries
+#    Spark will automatically infer the schema based on the data types of the values.
+df = spark.createDataFrame(data)
+# 16.2 Print the inferred schema
+print("Inferred DataFrame Schema:")
+df.printSchema()
+
+# 17. Creating DataFrame with Schema: Create a Spark DataFrame from a Python list of tuples,
+# explicitly defining the schema.
+# 17.1 Import necessary objects from SparkSQL
+from pyspark.sql.types import StructType, StructField, DoubleType
+# 17.2 Define the schema
+list_of_tuples = [(42.3421, 42.3221), (42.3431, 40.3211), (43.7429, 42.9961)]
+schema = StructType([
+    StructField("lan", DoubleType(), True),      # 'lan' column, DoubleType, nullable
+    StructField("log", DoubleType(), True)       # 'log' column, DoubleType, nullable
+])
+# 17.3 Create Spark Dataframe based on the predefined schema
+df_tuples = spark.createDataFrame(list_of_tuples, schema=schema)
+df_tuples.show()
