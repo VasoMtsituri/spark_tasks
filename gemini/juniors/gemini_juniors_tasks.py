@@ -98,3 +98,22 @@ schema = StructType([
 # 17.3 Create Spark Dataframe based on the predefined schema
 df_tuples = spark.createDataFrame(list_of_tuples, schema=schema)
 df_tuples.show()
+
+# 18. Loading CSV into DataFrame: Load a CSV file
+# (e.g., a small dataset like countries.csv) into a DataFrame.
+df_countries = spark.read.csv('countries.csv', header=True)
+df_countries.show()
+
+# 19. Loading JSON into DataFrame: Load a JSON file into a DataFrame.
+df_countries_json = spark.read.option("multiline", "true").json('countries.json')
+print('#' * 100)
+df_countries_json.show()
+
+# 20. Showing DataFrame Schema: Display the schema of a loaded DataFrame.
+df_countries_json.printSchema()
+
+# 21.Displaying DataFrame Contents: Show the first few rows of a DataFrame.
+
+df_continent_country = df_countries.select("Continent", "Country")
+print('#' * 100)
+df_continent_country.show()

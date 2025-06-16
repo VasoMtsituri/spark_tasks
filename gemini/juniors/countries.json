@@ -1,0 +1,37 @@
+[
+  {
+    "Country": "United States",
+    "Capital": "Washington D.C.",
+    "Continent": "North America",
+    "Population_Millions": 331.9,
+    "Area_SqKm": 9834000
+  },
+  {
+    "Country": "Canada",
+    "Capital": "Ottawa",
+    "Continent": "North America",
+    "Population_Millions": 38.2,
+    "Area_SqKm": 9985000
+  },
+  {
+    "Country": "Brazil",
+    "Capital": "Brasília",
+    "Continent": "South America",
+    "Population_Millions": 215.3,
+    "Area_SqKm": 8516000
+  },
+  {
+    "Country": "Germany",
+    "Capital": "Berlin",
+    "Continent": "Europe",
+    "Population_Millions": 83.2,
+    "Area_SqKm": 357000
+  },
+  {
+    "Country": "India",
+    "Capital": "New Delhi",
+    "Continent": "Asia",
+    "Population_Millions": 1407.6,
+    "Area_SqKm": 3287000
+  }
+]
