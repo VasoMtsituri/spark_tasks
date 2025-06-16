@@ -58,4 +58,11 @@ words_rdd = readme_file.rdd.flatMap(lambda x: x.value.lower().split())
 # 13.2 - Assign count of 1 to each word (map)
 word_pairs_rdd = words_rdd.map(lambda x: (x, 1))
 # 13.3 - Aggregate counts by word (reduceByKey)
-word_counts_rdd = word_pairs_rdd.reduceByKey(lambda x, y: x + y).collect()
+word_counts_rdd = word_pairs_rdd.reduceByKey(lambda x, y: x + y)
+
+# 14. Collecting Results: Take the first N elements from an RDD and print them to the console.
+first_5_words = word_counts_rdd.take(5)
+print(first_5_words)
+
+# 15. Saving RDD to Text File: Save an RDD of strings to a text file.
+word_counts_rdd.saveAsTextFile('word_counts.txt')
