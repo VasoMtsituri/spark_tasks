@@ -113,7 +113,34 @@ df_countries_json.show()
 df_countries_json.printSchema()
 
 # 21.Displaying DataFrame Contents: Show the first few rows of a DataFrame.
-
 df_continent_country = df_countries.select("Continent", "Country")
 print('#' * 100)
 df_continent_country.show()
+
+# 22.Filtering Rows (DataFrame): Filter a DataFrame to include
+# only rows that meet a certain condition(e.g. Population > 61m
+from pyspark.sql.functions import col
+df_africa = df_countries.filter(col('Population_Millions') > 61.0)
+print('#' * 100)
+df_africa.show()
+
+# 23. Adding a New Column: Add a new column to a DataFrame based on existing columns
+from pyspark.sql.functions import concat, lit
+df_with_address = df_countries.withColumn(colName='Global_Address',
+                                          col=concat(col('Capital'),
+                                                     lit(','),
+                                                     col('Country'),
+                                                     lit(','),
+                                                     col('Continent')))
+print('#' * 100)
+df_with_address.show()
+
+# 24. Renaming a Column: Rename an existing column in a DataFrame.
+df_renamed = df_with_address.withColumnRenamed(existing='Area_SqKm', new='Area(sqkm)')
+print('#' * 100)
+df_renamed.show()
+
+# 25. Dropping a Column: Remove a column from a DataFrame.
+df_without_address = df_with_address.drop("Global_Address")
+print('#' * 100)
+df_without_address.show()
