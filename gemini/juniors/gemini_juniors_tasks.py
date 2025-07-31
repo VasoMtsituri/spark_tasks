@@ -144,3 +144,36 @@ df_renamed.show()
 df_without_address = df_with_address.drop("Global_Address")
 print('#' * 100)
 df_without_address.show()
+
+# 26. Handling Missing Values (Drop): Drop rows from a DataFrame that contain any missing values.
+data_with_nulls = [
+    {"name": "Alice", "age": 30, "city": "New York", "is_student": False, "score": 85.5},
+    {"name": "Bob", "age": 24, "city": "London", "is_student": True, "score": 92.1},
+    {"name": "Charlie", "age": 35, "city": "Paris", "is_student": False, "score": 78.9},
+    {"name": "Diana", "age": 28, "city": None, "is_student": True, "score": 88.0},
+    {"name": "Eve", "age": None, "city": "Berlin", "is_student": False, "score": 70.0}
+]
+
+df_raw = spark.createDataFrame(data_with_nulls)
+df_without_nulls = df_raw.dropna()
+print('#' * 100)
+df_without_nulls.show()
+
+# 28. Handling Missing Values (Fill): Fill missing values in a specific column with a default value.
+df_raw_for_defaults = spark.createDataFrame(data_with_nulls)
+df_filled = df_raw_for_defaults.fillna('n/a', subset='city')
+print('#' * 100)
+df_filled.show()
+
+# 29. Aggregations (DataFrame): Calculate the average, sum, min,
+# and max of a numeric column in a DataFrame.
+from pyspark.sql.functions import avg, sum, min, max
+
+agg_results = df_filled.agg(
+    avg("score").alias("average_score"),
+    sum("score").alias("total_score"),
+    min("score").alias("min_score"),
+    max("score").alias("max_score")
+)
+print('#' * 100)
+agg_results.show()
