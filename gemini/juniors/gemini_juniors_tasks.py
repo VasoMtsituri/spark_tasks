@@ -177,3 +177,24 @@ agg_results = df_filled.agg(
 )
 print('#' * 100)
 agg_results.show()
+
+# 30. Grouping and Aggregating: Group a DataFrame by one or more columns and
+# calculate aggregate functions (e.g., count of records per category).
+from pyspark.sql.functions import count, lit
+
+data_to_count = [
+    {"name": "Alice", "age": 30, "city": "New York", "is_student": False, "score": 85.5},
+    {"name": "Bob", "age": 24, "city": "London", "is_student": True, "score": 92.1},
+    {"name": "Charlie", "age": 35, "city": "Paris", "is_student": False, "score": 78.9},
+    {"name": "Diana", "age": 28, "city": "London", "is_student": True, "score": 88.0},
+    {"name": "Eve", "age": None, "city": "Berlin", "is_student": False, "score": 70.0}
+]
+city_stats_df = spark.createDataFrame(data_to_count)
+df_agg_by_count = city_stats_df.groupBy("city").agg(count(lit(1)).alias("population"))
+print('#' * 100)
+df_agg_by_count.show()
+
+# 31. Sorting DataFrame: Sort a DataFrame by one or more columns in ascending or descending order.
+df_sorted_by_best_scores = city_stats_df.sort("score", ascending=False)
+print('#' * 100)
+df_sorted_by_best_scores.show()
