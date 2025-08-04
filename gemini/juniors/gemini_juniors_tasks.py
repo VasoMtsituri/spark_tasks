@@ -198,3 +198,26 @@ df_agg_by_count.show()
 df_sorted_by_best_scores = city_stats_df.sort("score", ascending=False)
 print('#' * 100)
 df_sorted_by_best_scores.show()
+
+# 32. Distinct Rows (DataFrame): Get the distinct rows from a DataFrame
+df_distinct = df_sorted_by_best_scores.distinct()
+print('#' * 100)
+df_distinct.show()
+
+# 35. Running SQL Queries: Register a DataFrame as a temporary view and execute a SQL query on it.
+df_distinct.createOrReplaceTempView("students_view")
+all_students = spark.sql("SELECT * FROM students_view WHERE is_student = true")
+print('#' * 100)
+all_students.show()
+
+# 36. Saving DataFrame to Parquet: Save a DataFrame to a Parquet file.
+all_students.write.mode("overwrite").parquet("allstudents.parquet")
+
+# 37. Saving DataFrame to CSV: Save a DataFrame to a CSV file.
+all_students.write.mode("overwrite").option("header", "true").csv("allstudents.csv")
+
+# 38. Reading Parquet File: Load data from a Parquet file into a DataFrame.
+df_loaded_from_parquet = spark.read.parquet("allstudents.parquet")
+print('#' * 100)
+df_loaded_from_parquet.printSchema()
+df_loaded_from_parquet.show()
